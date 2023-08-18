@@ -5,13 +5,15 @@ import {
   onMounted,
   onUnmounted,
   $navigateTo,
+  defineProps,
 } from 'nativescript-vue';
-import Details from './Details.vue';
+import Details from '../components/Details.vue';
+
+const props = defineProps({
+  driverId: String
+});
 
 const counter = ref(0);
-const message = computed(() => {
-  return `Blank {N}-Vue app: ${counter.value}`;
-});
 
 function logMessage() {
   console.log('You have tapped the message!');
@@ -30,7 +32,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <Frame>
+  
     <Page>
       <ActionBar>
         <Label text="Home" class="font-bold text-lg" />
@@ -40,9 +42,13 @@ onUnmounted(() => {
         <Label
           row="1"
           class="text-xl align-middle text-center text-gray-500"
-          :text="message"
           @tap="logMessage"
-        />
+        >
+          <FormattedString>
+            <Span text="Hello, " />
+            <Span :text="props.driverId" />
+          </FormattedString>
+        </Label>
 
         <Button
           row="2"
@@ -54,7 +60,6 @@ onUnmounted(() => {
         </Button>
       </GridLayout>
     </Page>
-  </Frame>
 </template>
 
 <style>
